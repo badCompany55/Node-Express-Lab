@@ -57,16 +57,27 @@ router.put("/:id", async (req, res) => {
             .status(404)
             .json({ error: "The post with the specified ID does not exist." });
     } else {
-      res
-        .status(400)
-        .json({
-          errorMessage: "Please provide title and contents for the post."
-        });
+      res.status(400).json({
+        errorMessage: "Please provide title and contents for the post."
+      });
     }
   } catch (err) {
     res
       .status(500)
       .json({ error: "The post information could not be modified." });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const post = await posts.remove(req.params.id);
+    post
+      ? res.status(200).json({ deleted: post })
+      : res
+          .status(404)
+          .json({ message: "The post with the specified ID does not exist." });
+  } catch (err) {
+    res.status(500).json({ error: "The post could not be removed." });
   }
 });
 
