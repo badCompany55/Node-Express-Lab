@@ -71,8 +71,9 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const post = await posts.remove(req.params.id);
+    const newListPosts = await posts.find();
     post
-      ? res.status(200).json({ deleted: post })
+      ? res.status(200).json({ deleted: post, posts: newListPosts })
       : res
           .status(404)
           .json({ message: "The post with the specified ID does not exist." });

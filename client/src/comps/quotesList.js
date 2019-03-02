@@ -4,12 +4,25 @@ import { fetchQuotes } from "../actions/action.js";
 import Quote from "./quote.js";
 
 class QuotesList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchQuotes();
+  }
+
   render() {
     return (
       <div className="qlistCont">
         {this.props.quotes.map(quote => {
           return (
-            <Quote key={quote.id} title={quote.title} content={quote.content} />
+            <Quote
+              key={quote.id}
+              title={quote.title}
+              content={quote.content}
+              id={quote.id}
+            />
           );
         })}
       </div>
@@ -25,5 +38,5 @@ const mstp = state => {
 
 export default connect(
   mstp,
-  fetchQuotes
+  { fetchQuotes }
 )(QuotesList);
