@@ -5,6 +5,8 @@ export const FETCHEDQUOTES = "FETCHEDQUOTES";
 export const ERROR = "ERROR";
 export const DELETINGQUOTE = "DELETINGQUOTE";
 export const DELETEDQUOTE = "DELETEDQUOTE";
+export const ADDINGQUOTE = "ADDQUOTE";
+export const ADDEDQUOTE = "ADDEDQUOTE";
 
 export const fetchQuotes = () => {
   return async dispatch => {
@@ -24,7 +26,18 @@ export const deleteQuote = id => {
     try {
       let res = await axios.delete(`http://www.localhost:4000/api/posts/${id}`);
       dispatch({ type: DELETEDQUOTE, payload: res.data.posts });
-      console.log(res.data);
+    } catch (err) {
+      dispatch({ type: ERROR, payload: err });
+    }
+  };
+};
+
+export const addQuote = quote => {
+  return async dispatch => {
+    dispatch({ type: ADDINGQUOTE });
+    try {
+      let res = await axios.post("http://www.localhost:4000/api/posts", quote);
+      dispatch({ type: ADDEDQUOTE, payload: res.data.newPost });
     } catch (err) {
       dispatch({ type: ERROR, payload: err });
     }

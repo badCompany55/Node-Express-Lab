@@ -20,7 +20,7 @@ class QuotesList extends React.Component {
             <Quote
               key={quote.id}
               title={quote.title}
-              content={quote.content}
+              content={quote.contents}
               id={quote.id}
             />
           );

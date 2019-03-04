@@ -2,7 +2,9 @@ import {
   FETCHINGQUOTES,
   FETCHEDQUOTES,
   DELETEDQUOTE,
-  DELETINGQUOTE
+  DELETINGQUOTE,
+  ADDINGQUOTE,
+  ADDEDQUOTE
 } from "../actions/action.js";
 
 const initalState = {
@@ -10,6 +12,8 @@ const initalState = {
   fetchedQuotes: false,
   deletingQuote: false,
   deletedQuote: false,
+  addingQuote: false,
+  addedQuote: false,
   quotes: []
 };
 
@@ -51,6 +55,29 @@ export const quotesReducer = (state = initalState, action) => {
         deletingQuote: false,
         deletedQuote: true,
         quotes: action.payload
+      };
+    }
+    case ADDINGQUOTE: {
+      return {
+        ...state,
+        fetchingQuotes: false,
+        fetchedQuotes: false,
+        deletingQuote: false,
+        deletedQuote: false,
+        addingQuote: true,
+        addedQuote: false
+      };
+    }
+    case ADDEDQUOTE: {
+      return {
+        ...state,
+        fetchingQuotes: false,
+        fetchedQuotes: false,
+        deletingQuote: false,
+        deletedQuote: false,
+        addingQuote: true,
+        addedQuote: false,
+        quotes: [...state.quotes, action.payload]
       };
     }
     default:
